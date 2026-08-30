@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Writing</title>
+  <link rel="stylesheet" href="./css/tufte.css"/>
+  <style>
+    /* Minimalist Navbar matching Tufte proportions */
+    header.site-header {
+      width: 87.5%;
+      margin: 0 auto;
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header.site-header a {
+      color: inherit;
+      text-decoration: none;
+      background: none;
+    }
+    header.site-header .brand {
+      font-size: 1.4rem;
+      font-weight: normal;
+    }
+
+		/* Control logo sizing and alignment */
+		header.site-header .brand img {
+			height: 22px;              /* Adjust height to balance with nav link font size */
+			width: auto;               /* Keeps original aspect ratio */
+			display: block;            /* Removes phantom bottom inline spacing */
+			object-fit: contain;
+		}
+
+    header.site-header nav a {
+      margin-left: 1.5rem;
+      font-size: 1.1rem;
+    }
+    header.site-header nav a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 760px) {
+      header.site-header {
+        width: 90%;
+        padding-top: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="./index.html" class="brand">
+		<img src="./images/logo.png" alt="site logo"/>
+	</a>
+  <nav>
+    <a href="./posts.html">Posts</a>
+  </nav>
+</header>
+
+<article>
+  <h1>Writing</h1>
+  <p class="subtitle">August 30, 2026</p>
+  <section>
+<p>I have been trying to find my place in the writing world. After getting on and off with different tech stacks in the past, I have finally settled on adopting Tufte CSS with my own static generator written in JavaScript. Nothing fancy, but I hope the limitations and simplicity of this blog can help me focus on the most important of writing a blog, the writing itself. I hope this can be my treehouse<label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"/><span class="sidenote">Paul Graham describes a <a href="https://paulgraham.com/own.html">treehouse</a> as a project one starts by one's own idea for one's self-fulfillment.</span>.</p>
+</section>
+<section>
+<h2>Me and Writing Postcards</h2>
+<p>I have always loved writing postcards, a hobby people nowadays seem to have abandoned.<label for="mf-1" class="margin-toggle">⊕</label><input type="checkbox" id="mf-1" class="margin-toggle"/><span class="marginnote"><img src="./images/ariq-polaroid.jpg" alt="Me at a post box in London"/>Me at a post box in London</span> Through postcards, I can let the receiver know more about me and how I feel about them. In a way, it's like a social lubricant, only it's mostly one-way communication. The things I write in postcards are typically things that are left unsaid in a day-to-day conversation. Things like, appreciation, gratitude, and hopes for long-lasting relationships.</p>
+<p>Living in Japan, it's so effortless to send postcards. One can find post boxes all over the country. Japan maintains these post boxes and collect mails every day because their bureaucracy depends on mails. Of all three countries in which I've gone during my undergrad, it's the only one requiring me to physically mail the application form. And this is not rare, it's more of a norm than an exception.</p>
+<p>One thing I like about postcards is the flat fee they have for domestic and international destinations. As of 2026, it costs JPY 85 to send a postcard to anywhere in Japan, and JPY 100 to send across the globe. Postal rates were not always uniform<label for="sn-2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-2" class="margin-toggle"/><span class="sidenote">Referring specifically to standard letters and postcards</span>. Historically, the labor cost of calculating individualized rates based on distance and size was traded for efficiency of a single, lower flat rate <label for="sn-3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-3" class="margin-toggle"/><span class="sidenote">Thanks to <a href="https://en.wikipedia.org/wiki/Charles_Babbage#:~:text=Babbage%20studied%20the%20requirements%20to%20establish%20a%20modern%20postal%20system%2C%20with%20his%20friend%20Thomas%20Frederick%20Colby%2C">Babbage and Colby</a></span>.</p>
+<p>The experience of sending postcards is unique not only due to its flat rate: you don't get to track postcards. We may be used to checking where our Amazon package is so we can anticipate it arriving, but this is something people don't usually do to postcards. You can track postcards, but it will introduce additional fees that will vary according to distance. Not being able to track postcards gives it a kind of charm. Like sending mail during the early years of international postages in the 1800s. The mystery gives the anticipation we don't get from our digitalized, information-rich routine.</p>
+<p>However, post companies don't prioritize postcards as they do with other types of mails. Postcards usually don't hold that much formal importance. It is not enveloped so it also holds no secrecy. This results in some post companies from certain countries to disregard postcards as important, resulting in many cards never arrive at their destined addresses<label for="mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="mn-1" class="margin-toggle"/><span class="marginnote">From experience, sending to Indonesia yields an arrival rate of 10%.</span>. Luckily, most of my experience in Postcrossing has been great<label for="sn-4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-4" class="margin-toggle"/><span class="sidenote"><a href="https://www.postcrossing.com/">A site</a> to send postcards to random strangers</span>. I haven't missed one address.</p>
+</section>
+<section>
+<h2>Me and Writing</h2>
+<p>I used to write when I was in middle school. I had this blog hosting my ideas of motivation and self improvement. A lot of this had something to do with my mother being a mindfulness coach<label for="sn-5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-5" class="margin-toggle"/><span class="sidenote">I am not sure if this is an actual job title.</span>. I shared a blog with my middle school friend, managing one blogspot admin panel with two authors. I remember putting Gintama<label for="sn-6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-6" class="margin-toggle"/><span class="sidenote">A Japanese anime.</span> pictures in the articles as illustrations of self-improvement. Writing for fun without worrying whether anyone would read them, my world was pretty small and innocent back then. Actually, I did dream of getting some earnings from my blog at some point around that period.</p>
+<p>My life then went on without much writing, and it became even less of a thing ever since AI. I use weaponized incompetence to let AI do a lot of the writings I need to do in Japanese and English, just because they are not my mother tongue<label for="sn-7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-7" class="margin-toggle"/><span class="sidenote">Even though I don't use my mother tongue for learning or working anymore.</span>. That means that I have strayed quite far from the habit of writing, especially the manual kind. Despite that, I have always had ideas to explore in the fields of language, self-improvement, economics, and business. Every time and idea pops up in my mind, I would add them to my note.<label for="mf-2" class="margin-toggle">⊕</label><input type="checkbox" id="mf-2" class="margin-toggle"/><span class="marginnote"><img src="images/applenotesmeme.jpeg" alt="I use Apple Notes and Obsidian."/>I use Apple Notes and Obsidian.</span></p>
+<p>As you might think, I am not good at this writing thing yet. I have probably put too much margin and side notes the site looks cluttered by now. No matter. It's my treehouse and the goal is not some readermaxxing. As adults, we tend to value only the things that are considered productive. Learning a new language sounds economically productive. Learning how to skate as an adult? Waste of time. However, things may not be as linear as how it's perceived. Serendipity can be attractive to pursue. So I want to keep this blog as an attempt to respect myself. To assert that my ideas and my curiosity are among my priorities.</p>
+</section>
+<section>
+<h2>Some of My ideas</h2>
+<p>Evolution's priority is not longevity. <em>As humans live longer, we as a society are obsessed with longevity. Some are even obsessed with regaining youth. But evolution's priority has never been longevity. As long as reproduction is ensured, a species' task is fulfilled. Longevity might eliminate the need for reproduction, thus contradicting evolution.</em></p>
+<p>English also uses kanji<label for="sn-8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-8" class="margin-toggle"/><span class="sidenote">The East Asian writing system originating from China.</span>. <em>At a glance, it may seem clear that English does not utilize kanji. Kanji utilizes stroke order with a plethora of variations to yield approximately one meaning per character. Each character is also read in a different way, and some of them are read differently in different context. There are 26 characters in the English alphabet and each does not mean anything on their own. However, the English vocabularies rarely derive phonetics from its writing. The word 'content' can be read in two different ways. 'Tough', 'though', 'thorough', and 'thought' are infamous examples of English words not retaining phonetics information within them. This means that in order to learn an English word, one has to know its 1. meaning, 2. sound, and 3. the order of characters. Sounds too much like kanji, doesn't it?</em></p>
+<p>What single item of the current world will be most valuable if we bring it to the world 500 years ago?</p>
+<p>If the multiverse exists, what would most likely be consistent across every universe? <em>One idea is the letter 'o'. It's so intuitive that it probably ends up being the same in another universe. The equal sign could be a good argument, too. The wheel is also undisputed. A counterexample would be the kanji writing system. It takes space but not necessarily for good reasons, as there are inconsistencies among the characters. There is a reason why the modern surviving logographic writing system is basically only kanji.</em></p>
+<p>And so on.</p>
+
+</section>
+</article>
+
+</body>
+</html>

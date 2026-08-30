@@ -118,7 +118,7 @@ async function build() {
 			.replace(/<section>\s*<\/section>/g, '');
 
 		const finalHtml = template
-			.replace(/{{title}}/g, meta.title || 'Untitled')
+			.replace(/{{title}}/g, meta.title || '')
 			.replace(/{{date}}/g, meta.date || '')
 			.replace('{{content}}', renderedHtml);
 

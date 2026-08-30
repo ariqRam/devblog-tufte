@@ -1,0 +1,20 @@
+{
+  "name": "ariqdevblog-tufte",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "heic-convert": "^2.1.0",
+    "markdown-it": "^15.0.1",
+    "sharp": "^0.35.4"
+  }
+}

@@ -85,32 +85,116 @@ async function copyAndConvertAssets(srcDir, destDir) {
 	}
 }
 
+async function compileAllPostsPage(files) {
+	const posts = [];
+
+	for (const file of files) {
+		// Exclude posts.md, index.md, or non-markdown files from the archive listing
+		if (file === 'posts.md' || file === 'index.md' || !file.endsWith('.md')) continue;
+
+		const filePath = path.join(CONTENT_DIR, file);
+		const rawFile = fs.readFileSync(filePath, 'utf8');
+		const { data: meta } = matter(rawFile);
+
+		// Skip posts without title or date
+		if (!meta.title || !meta.date) continue;
+
+		const dateObj = new Date(meta.date);
+		const year = !isNaN(dateObj.getFullYear()) ? dateObj.getFullYear().toString() : 'Undated';
+		const formattedDate = !isNaN(dateObj.getTime())
+			? dateObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+			: meta.date;
+
+		const slug = file.replace(/\.md$/, '.html');
+
+		posts.push({
+			title: meta.title,
+			formattedDate,
+			year,
+			timestamp: isNaN(dateObj.getTime()) ? 0 : dateObj.getTime(),
+			url: `./${slug}`,
+			description: meta.description || '' // Optional frontmatter description
+		});
+	}
+
+	// 1. Sort posts chronologically (newest first)
+	posts.sort((a, b) => b.timestamp - a.timestamp);
+
+	// 2. Group posts by year
+	const postsByYear = {};
+	for (const post of posts) {
+		if (!postsByYear[post.year]) {
+			postsByYear[post.year] = [];
+		}
+		postsByYear[post.year].push(post);
+	}
+
+	// 3. Read optional intro text from content/posts.md (if it exists)
+	let pageTitle = 'All Posts';
+	let pageIntro = 'A chronological archive of essays, notes, and experiments.';
+	const postsMdPath = path.join(CONTENT_DIR, 'posts.md');
+
+	if (fs.existsSync(postsMdPath)) {
+		const rawPostsMd = fs.readFileSync(postsMdPath, 'utf8');
+		const { data: postsMeta, content: postsContent } = matter(rawPostsMd);
+		if (postsMeta.title) pageTitle = postsMeta.title;
+		if (postsContent.trim()) pageIntro = postsContent.trim();
+	}
+
+	// 4. Construct Markdown dynamically
+	let generatedMarkdown = `${pageIntro}\n\n`;
+	const sortedYears = Object.keys(postsByYear).sort((a, b) => b.localeCompare(a));
+
+	for (const yr of sortedYears) {
+		generatedMarkdown += `## ${yr}\n\n`;
+		for (const post of postsByYear[yr]) {
+			const sidenote = post.description ? `[sn: ${post.description}]` : '';
+			generatedMarkdown += `* *${post.formattedDate}* — [${post.title}](${post.url})${sidenote}\n`;
+		}
+		generatedMarkdown += `\n`;
+	}
+
+	// 5. Render using the standard Tufte template pipeline
+	sectionOpen = false;
+	const processedBody = processShortcodes(generatedMarkdown);
+	let renderedHtml = `<section>\n${md.render(processedBody)}\n</section>`
+		.replace(/<section>\s*<\/section>/g, '');
+
+	const templatePath = path.join(TEMPLATES_DIR, 'base.html');
+	const template = fs.readFileSync(templatePath, 'utf8');
+
+	const finalHtml = template
+		.replace(/{{title}}/g, pageTitle)
+		.replace(/{{date}}/g, '')
+		.replace('{{content}}', renderedHtml);
+
+	fs.writeFileSync(path.join(DIST_DIR, 'posts.html'), finalHtml);
+	console.log(`✓ Compiled: Dynamic archive -> dist/posts.html (${posts.length} posts)`);
+}
+
 async function build() {
 	console.log('Starting build...');
 
-	// 1. Reset /dist
+	// Reset /dist & copy static assets
 	if (fs.existsSync(DIST_DIR)) {
 		fs.rmSync(DIST_DIR, { recursive: true, force: true });
 	}
 	fs.mkdirSync(DIST_DIR, { recursive: true });
-
-	// 2. Process static files + convert .heic
 	await copyAndConvertAssets(STATIC_DIR, DIST_DIR);
 
-	// 3. Load Template
 	const templatePath = path.join(TEMPLATES_DIR, 'base.html');
 	const template = fs.readFileSync(templatePath, 'utf8');
-
-	// 4. Compile Markdown
 	const files = fs.readdirSync(CONTENT_DIR).filter(file => file.endsWith('.md'));
 
+	// Compile individual pages (index.md, plotter-art.md, etc.)
 	for (const file of files) {
+		if (file === 'posts.md') continue; // Handled separately
+
 		sectionOpen = false;
 		const filePath = path.join(CONTENT_DIR, file);
 		const rawFile = fs.readFileSync(filePath, 'utf8');
 		const { data: meta, content: markdownBody } = matter(rawFile);
 
-		// Replace shortcodes and automatically rewrite .heic references to .jpg
 		let processedBody = processShortcodes(markdownBody)
 			.replace(/\.heic\b/gi, '.jpg');
 
@@ -118,7 +202,7 @@ async function build() {
 			.replace(/<section>\s*<\/section>/g, '');
 
 		const finalHtml = template
-			.replace(/{{title}}/g, meta.title || '')
+			.replace(/{{title}}/g, meta.title || 'Untitled')
 			.replace(/{{date}}/g, meta.date || '')
 			.replace('{{content}}', renderedHtml);
 
@@ -127,7 +211,10 @@ async function build() {
 		console.log(`✓ Compiled: content/${file} -> dist/${outputFileName}`);
 	}
 
-	console.log('Build complete. Ready in /dist');
+	// Generate automated posts listing page
+	await compileAllPostsPage(files);
+
+	console.log('Build complete. Output generated in /dist');
 }
 
 build().catch(err => {
